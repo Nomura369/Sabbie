@@ -9,7 +9,9 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { GluestackUIProvider, StatusBar } from '@gluestack-ui/themed';
 import { config } from '@gluestack-ui/config';
 
+import { Provider } from 'react-redux';
 import Navigation from "./src/navigation/index";
+import store from './src/redux/store';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -32,10 +34,12 @@ const App = () => {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{flex: 1}} onLayout={onLayoutRootView}>
-        <GluestackUIProvider config={config}>
-          <StatusBar />
-          <Navigation />
-        </GluestackUIProvider>         
+        <Provider store={store}>
+          <GluestackUIProvider config={config}>
+            <StatusBar />
+            <Navigation />
+          </GluestackUIProvider>  
+        </Provider>       
       </SafeAreaView>  
     </SafeAreaProvider>
   );
