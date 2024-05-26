@@ -12,7 +12,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import { Divider, Image, Text, Center, VStack, Pressable } from '@gluestack-ui/themed';
 import { TouchableOpacity } from 'react-native';
-import { useState } from "react";
 
 import TheTheme from '../theme';
 import StatisticsScreen from "../screens/StatisticsScreen"
@@ -21,6 +20,10 @@ import ActionButton from "../components/ActionButton";
 import HomeScreen from "../screens/HomeScreen"
 import QuestionScreen from '../screens/QuestionScreen';
 import CompletionScreen from "../screens/CompletionScreen"
+import LoginScreen from '../screens/LoginScreen';
+import SettingScreen from "../screens/SettingScreen"
+import HelpScreen from '../screens/HelpScreen';
+//import LogoutScreen from "../screens/LogoutScreen"
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -42,6 +45,7 @@ const TheDrawer = () => { // Drawer導覽編排
       <Drawer.Navigator
         initialRouteName="HomeStack"
         screenOptions={{
+          headerShown: false,
           drawerActiveTintColor: colors.primary2,
           drawerInactiveTintColor: colors.character1,
           drawerStyle: { width: 300 },
@@ -53,13 +57,54 @@ const TheDrawer = () => { // Drawer導覽編排
           name="HomeStack"
           component={HomeStack}
           options={{
-            headerShown: false,
-            drawerLabel: "首頁", // icon旁的文字
+            drawerLabel: "首頁",
             drawerIcon: ({ color }) => (
               <MaterialCommunityIcons name="home" color={color} size={24} />
             ),
           }}
         />
+        <Drawer.Screen
+          // 登入後消失
+          name="Login"
+          component={LoginScreen}
+          options={{
+            drawerLabel: "登入", 
+            drawerIcon: ({ color }) => (
+              <MaterialCommunityIcons name="account-circle" color={color} size={24} />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name="Setting"
+          component={SettingScreen}
+          options={{
+            drawerLabel: "設定",
+            drawerIcon: ({ color }) => (
+              <MaterialCommunityIcons name="cog" color={color} size={24} />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name="Help"
+          component={HelpScreen}
+          options={{
+            drawerLabel: "幫助",
+            drawerIcon: ({ color }) => (
+              <MaterialCommunityIcons name="help-circle" color={color} size={24} />
+            ),
+          }}
+        />
+        {/*<Drawer.Screen
+          // 登入後才出現
+          name="Logout"
+          component={LogoutScreen}
+          options={{
+            drawerLabel: "登出",
+            drawerIcon: ({ color }) => (
+              <MaterialCommunityIcons name="logout" color={color} size={24} />
+            ),
+          }}
+        />*/}
       </Drawer.Navigator>
     );
   }
@@ -86,45 +131,7 @@ const CustomDrawerContent = (props) => { // Drawer頁面排版
             {/*Drawer.Screen內容*/}
             <DrawerItemList {...props} />
 
-            {/*自訂Drawer項目：DrawerItem*/}
-            <DrawerItem 
-                label="登入" //登入後消失
-                activeTintColor={colors.primary2}
-                inactiveTintColor={colors.character1}
-                labelStyle={ {fontSize: 14} }
-                icon={({ color }) => (
-                <MaterialCommunityIcons name="account-circle" color={color} size={24} />
-                )}
-                //onPress={LoginScreen}
-            />
-            <DrawerItem 
-                label="設定"
-                activeTintColor={colors.primary2}
-                inactiveTintColor={colors.character1}
-                labelStyle={ {fontSize: 14} }
-                icon={({ color }) => (
-                <MaterialCommunityIcons name="cog" color={color} size={24} />
-                )}
-                //onPress={SettingScreen}
-            />
-            <DrawerItem 
-                label="幫助"
-                activeTintColor={colors.primary2}
-                inactiveTintColor={colors.character1}
-                labelStyle={ {fontSize: 14} }
-                icon={({ color }) => (
-                <MaterialCommunityIcons name="help-circle" color={color} size={24} />
-                )}
-            />
-            {/*<DrawerItem 
-                label="登出"  //登入後才出現
-                activeTintColor={colors.primary2}
-                inactiveTintColor={colors.character1}
-                labelStyle={ {fontSize: 14} }
-                icon={({ color }) => (
-                <MaterialCommunityIcons name="logout" color={color} size={24} />
-                )}
-            />*/}
+            {/*自訂Drawer項目：DrawerItem，目前沒放*/}
         </DrawerContentScrollView>
     );
   }

@@ -1,5 +1,5 @@
 import React from "react";
-import { useTheme } from '@react-navigation/native';
+import { useTheme, useNavigation } from '@react-navigation/native';
 import {
   Box,
   Pressable,
@@ -15,11 +15,12 @@ import {
   VStack
 } from "@gluestack-ui/themed";
 
-import QuestionScreen from "../screens/QuestionScreen"
 //撰寫日記的頁面尚未引入
 
 export default () => {
   const { colors } = useTheme();
+  const navigation = useNavigation();
+
   const [showActionsheet, setShowActionsheet] = React.useState(false);
   const handleClose = () => setShowActionsheet(!showActionsheet);
 
@@ -45,7 +46,8 @@ export default () => {
           <ActionsheetDragIndicatorWrapper>
             <ActionsheetDragIndicator />
           </ActionsheetDragIndicatorWrapper>
-          <ActionsheetItem onPress={QuestionScreen}> 
+          {/*希望這樣跳轉是沒問題的*/}
+          <ActionsheetItem onPress={() => navigation.navigate("Question")}>
             <HStack justifyContent="center" alignItems="center">
                 <Image 
                     alt="星砂瓶" 
@@ -59,7 +61,8 @@ export default () => {
                 </VStack>
             </HStack>
           </ActionsheetItem>
-          <ActionsheetItem onPress={handleClose}> 
+          {/*希望這樣跳轉是沒問題的*/}
+          <ActionsheetItem onPress={() => navigation.navigate("Diary")}> 
             <HStack justifyContent="center" alignItems="center">
                 <Image 
                     alt="寫日記" 

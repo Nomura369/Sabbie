@@ -9,8 +9,8 @@ const TheTheme = {
      primary1: "#71BD80",  //星砂瓶頁面按鈕等(棕色)
      primary2: "#B7E5C0", //主頁的action button等(綠色)
      primary3: "#E4E3E3", //登入頁面按鈕等(深灰色)
-     character1: '#515151', //通常字體與icon顏色
-     character2: "#1D1D1D", //部分字體與icon顏色
+     character1: '#515151', //通常字體與icon顏色(偏淺)
+     character2: "#1D1D1D", //部分字體與icon顏色(偏深)
      happy: [
       "#F7E098", "#FFC971", "#FEEA76", 
       "#EFFD5F", "#FFDB1C", "#FFC30B"

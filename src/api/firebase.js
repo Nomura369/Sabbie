@@ -31,6 +31,7 @@ const firebaseConfig = {
   messagingSenderId: "998454437009",
   appId: "1:998454437009:web:1702809d2f5d4c50b24b30"
 };
+
 const app_length=getApps().length>0;
 
 // Initialize Firebase
@@ -74,8 +75,9 @@ const auth = app_length ? getAuth(app):
     const {uid} = auth.currentUser;
 
     try{
-      const docRef= doc(db,"user",uid);
+      const docRef= doc(db,"users",uid);
       const docSnap=await getDoc(docRef);
+
       if(docSnap.exists()){
         return docSnap.data();
 
@@ -83,7 +85,7 @@ const auth = app_length ? getAuth(app):
         return "No such document";
 
       }
-    }catch(e){
+    } catch(e){
       console.log(e)
     }
   }
@@ -91,7 +93,7 @@ const auth = app_length ? getAuth(app):
   export const updateUser= async(userInfo)=>{
     const {uid} =auth.currentUser;
     try{
-      const docRef=doc(db,"user",uid);
+      const docRef=doc(db,"users",uid);
       await setDoc(docRef,userInfo);
       const docSnap=await getDoc(docRef);
       return docSnap.data();

@@ -3,7 +3,7 @@ import {useDispatch,useSelector} from "react-redux";
 import {ScrollView,FromControl,Vstack,Text,Input,WarningOutlineIcon,KeyboardAvoidingView} from 'native-base'
 
 import {setGeneralAccountInfo} from "../redux/accountSlice";
-import {selectGeneral} from "../redux/accountSlice";
+import {selectGeneral,readUserAsync,updateUserAsync} from "../redux/accountSlice";
 
 const GeneralAccountScreen=()=>{
     const [name,setName]=useState(general.name);
