@@ -1,5 +1,6 @@
 import {configureStore} from '@reduxjs/toolkit';
 import accountReducer from "./accountSlice";
+import questionSlice from './questionSlice';
 import { persistStore, persistReducer } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -11,7 +12,9 @@ const persistConfig={
 export const store = configureStore({
     reducer:{
         account:persistReducer(persistConfig,accountReducer),
+        question:persistReducer(persistConfig,questionReducer),
     },
+    
     devTools:process.env.NODE_ENV !=='production',
     middleware: (getDefaultMiddleware)=>
      getDefaultMiddleware({

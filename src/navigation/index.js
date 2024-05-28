@@ -10,8 +10,8 @@ import {
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { Divider, Image, Text, Center, VStack, Pressable } from '@gluestack-ui/themed';
-import { TouchableOpacity } from 'react-native';
+import { Divider, Image, Text, Center, VStack } from '@gluestack-ui/themed';
+import { TouchableOpacity, Pressable } from 'react-native';
 
 import TheTheme from '../theme';
 import StatisticsScreen from "../screens/StatisticsScreen"
