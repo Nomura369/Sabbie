@@ -1,10 +1,17 @@
-import { Center, Text } from "@gluestack-ui/themed";
+import { Box } from "@gluestack-ui/themed";
+import { selectIsQuestion1 } from "../redux/questionSlice";
+import { useSelector } from "react-redux";
+
+import Question1 from "../components/Question1";
+import Question2 from "../components/Question2";
 
 const QuestionScreen = () => {
+    const isQuestion1 = useSelector(selectIsQuestion1);
+    
     return (
-        <Center flex={1}>
-            <Text>情緒選擇頁面（施工中）</Text>
-        </Center>
+        <Box>
+            { isQuestion1 ? <Question1 /> : <Question2 /> }
+        </Box>
     );
 }
 

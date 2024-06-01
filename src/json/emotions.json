@@ -1,0 +1,53 @@
+{
+    "emotions": [
+        {
+            "name": "喜悅",
+            "img": "https://i.imgur.com/ParZqhd.png",
+            "details": ["開心", "興奮", "感恩", "滿足", "平靜", "自信", "自定義"],
+            "images": [
+                "https://i.imgur.com/xDEKdxh.png", 
+                "https://i.imgur.com/r5T7wfS.png", 
+                "https://i.imgur.com/DiMtyqe.png", 
+                "https://i.imgur.com/2Fgs3eP.png", 
+                "https://i.imgur.com/tDHDT5r.png", 
+                "https://i.imgur.com/KtL0HVY.png"
+            ]
+        },
+        {
+            "name": "憤怒",
+            "details": ["震怒", "不公平", "受冒犯", "受威脅", "受抨擊", "受傷害", "自定義"],
+            "images": [
+                "https://i.imgur.com/gGU7q3G.png", 
+                "https://i.imgur.com/7UdHD6Y.png", 
+                "https://i.imgur.com/Bf52wPU.png", 
+                "https://i.imgur.com/ryaIyuu.png", 
+                "https://i.imgur.com/IpTVm1r.png", 
+                "https://i.imgur.com/JUVT56h.png"
+            ]
+        },
+        {
+            "name": "哀傷",
+            "details": ["難過", "失望", "孤單", "內疚", "疲累", "迷失", "自定義"],
+            "images": [
+                "https://i.imgur.com/LYZz50i.png", 
+                "https://i.imgur.com/1fX4Fxj.png", 
+                "https://i.imgur.com/62WCWB6.png", 
+                "https://i.imgur.com/wFGQyTZ.png", 
+                "https://i.imgur.com/0tMzo5S.png", 
+                "https://i.imgur.com/9hU3yAE.png"
+            ]
+        },
+        {
+            "name": "恐懼",
+            "details": ["緊張", "擔憂", "不安", "焦慮", "震驚", "不知所措", "自定義"],
+            "images": [
+                "https://i.imgur.com/x82Bu4W.png", 
+                "https://i.imgur.com/fREYmxW.png", 
+                "https://i.imgur.com/ov1GABB.png", 
+                "https://i.imgur.com/HHCHJqX.png", 
+                "https://i.imgur.com/69qsKDN.png", 
+                "https://i.imgur.com/Ine2Y6n.png"
+            ]
+        }
+    ]
+}

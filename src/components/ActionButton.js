@@ -4,6 +4,7 @@ import {
   Box,
   Pressable,
   Text,
+  Image,
   Actionsheet,
   ActionsheetBackdrop,
   ActionsheetDragIndicator,

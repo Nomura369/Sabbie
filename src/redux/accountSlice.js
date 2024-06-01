@@ -1,4 +1,4 @@
-import {createAsyncThunk, createSlice} from '@redux.js/toolkit';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import { login,logout,register,readUser,updateUser } from '../api/firebase';
 
 const loginAsync = createAsyncThunk(

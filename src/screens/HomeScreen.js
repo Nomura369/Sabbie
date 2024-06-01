@@ -2,7 +2,13 @@ import React,{useState} from "react";
 import SegmentedControlTab from "react-native-segmented-control-tab";
 import { View,StyleSheet,Pressable ,Image,Text ,ScrollView} from "react-native";
 
+import { resetState } from "../redux/questionSlice";
+import { useDispatch } from "react-redux";
+
 export default function HomeScreen({navigation}) {
+    const dispatch = useDispatch();
+    dispatch(resetState()); // 重置 Question 頁面的 Redux 狀態變數
+    
     const [selectedIndex,setSelectedIndex]=useState(0);
     
     const SegmentedContent=({navigation})=>{
@@ -43,7 +49,7 @@ export default function HomeScreen({navigation}) {
                                 <Image
                                     style={styles.emopic}
                                     source={{
-                                        uri:"https://github.com/joyce0129/EmotionApp/blob/main/src/img/happyface.png?raw=true"
+                                        uri:"https://github.com/joyce0129/EmotionApp/blob/main/src/img/bottle.png?raw=true"
                                     }}
                                 />
                                 <Text style={{fontSize:24,marginTop:10,marginLeft:10 ,fontFamily:"cjkFonts"}}>開心</Text>
@@ -76,7 +82,7 @@ export default function HomeScreen({navigation}) {
                                 <Image
                                     style={styles.emopic}
                                     source={{
-                                        uri:"https://github.com/joyce0129/EmotionApp/blob/main/src/img/fearface.png?raw=true"
+                                        uri:"https://github.com/joyce0129/EmotionApp/blob/main/src/img/bottle.png?raw=true"
                                     }}
                                 />
                                 <Text style={{fontSize:24,marginTop:10,marginLeft:10,fontFamily:"cjkFonts"}}>緊張</Text>
@@ -109,7 +115,7 @@ export default function HomeScreen({navigation}) {
                                 <Image
                                     style={styles.emopic}
                                     source={{
-                                        uri:"https://github.com/joyce0129/EmotionApp/blob/main/src/img/angryface.png?raw=true"
+                                        uri:"https://github.com/joyce0129/EmotionApp/blob/main/src/img/bottle.png?raw=true"
                                     }}
                                 />
                                 <Text style={{fontSize:24,marginTop:10,marginLeft:10,fontFamily:"cjkFonts"}}>震怒</Text>
@@ -143,7 +149,7 @@ export default function HomeScreen({navigation}) {
                                 <Image
                                     style={styles.emopic}
                                     source={{
-                                        uri:"https://github.com/joyce0129/EmotionApp/blob/main/src/img/happyface.png?raw=true"
+                                        uri:"https://github.com/joyce0129/EmotionApp/blob/main/src/img/bottle.png?raw=true"
                                     }}
                                 />
                                 <Text style={{fontSize:24,marginTop:10,marginLeft:10,fontFamily:"cjkFonts"}}>開心</Text>
@@ -184,7 +190,7 @@ export default function HomeScreen({navigation}) {
                                 <Image
                                     style={styles.emopic}
                                     source={{
-                                        uri:"https://github.com/joyce0129/EmotionApp/blob/main/src/img/happyface.png?raw=true"
+                                        uri:"https://github.com/joyce0129/EmotionApp/blob/main/src/img/bottle.png?raw=true"
                                     }}
                                 />
                                 <Text style={{fontSize:24,marginTop:10,marginLeft:10,fontFamily:"cjkFonts"}}>開心</Text>
@@ -218,7 +224,7 @@ export default function HomeScreen({navigation}) {
                                 <Image
                                     style={styles.emopic}
                                     source={{
-                                        uri:"https://github.com/joyce0129/EmotionApp/blob/main/src/img/fearface.png?raw=true?raw=true"
+                                        uri:"https://github.com/joyce0129/EmotionApp/blob/main/src/img/bottle.png?raw=true?raw=true"
                                     }}
                                 />
                                 <Text style={{fontSize:24,marginTop:10,marginLeft:10,fontFamily:"cjkFonts"}}>緊張</Text>
@@ -253,7 +259,7 @@ export default function HomeScreen({navigation}) {
                                 <Image
                                     style={styles.emopic}
                                     source={{
-                                        uri:"https://github.com/joyce0129/EmotionApp/blob/main/src/img/sadface.png?raw=true"
+                                        uri:"https://github.com/joyce0129/EmotionApp/blob/main/src/img/bottle.png?raw=true"
                                     }}
                                 />
                                 <Text style={{fontSize:24,marginTop:10,marginLeft:10,fontFamily:"cjkFonts"}}>失望</Text>
@@ -287,7 +293,7 @@ export default function HomeScreen({navigation}) {
                                 <Image
                                     style={styles.emopic}
                                     source={{
-                                        uri:"https://github.com/joyce0129/EmotionApp/blob/main/src/img/angryface.png?raw=true"
+                                        uri:"https://github.com/joyce0129/EmotionApp/blob/main/src/img/bottle.png?raw=true"
                                     }}
                                 />
                                 <Text style={{fontSize:24,marginTop:10,marginLeft:10,fontFamily:"cjkFonts"}}>震怒</Text>
@@ -322,7 +328,7 @@ export default function HomeScreen({navigation}) {
                                 <Image
                                     style={styles.emopic}
                                     source={{
-                                        uri:"https://github.com/joyce0129/EmotionApp/blob/main/src/img/happyface.png?raw=true"
+                                        uri:"https://github.com/joyce0129/EmotionApp/blob/main/src/img/bottle.png?raw=true"
                                     }}
                                 />
                                 <Text style={{fontSize:24,marginTop:10,marginLeft:10,fontFamily:"cjkFonts"}}>開心</Text>

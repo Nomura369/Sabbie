@@ -1,4 +1,5 @@
 import 'react-native-gesture-handler';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 //引入字體
 import { useFonts } from "expo-font";
@@ -13,6 +14,7 @@ import { Provider } from 'react-redux';
 import Navigation from "./src/navigation/index";
 import store from './src/redux/store';
 
+//console.log(store);
 
 SplashScreen.preventAutoHideAsync();
 
@@ -33,18 +35,15 @@ const App = () => {
   }
 
   return (
-    <SafeAreaProvider>
-      <SafeAreaView style={{flex: 1}} onLayout={onLayoutRootView}>
-        <Provider store={store}>
-          <GluestackUIProvider config={config}>
-            
-             < StatusBar />
-               <Navigation />
-            
-          </GluestackUIProvider>  
-        </Provider>       
-      </SafeAreaView>  
-    </SafeAreaProvider>
+    <GestureHandlerRootView>
+      <SafeAreaProvider>
+          <Provider store={store}>
+            <GluestackUIProvider config={config}>
+              <Navigation />
+            </GluestackUIProvider>
+          </Provider>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 };
 

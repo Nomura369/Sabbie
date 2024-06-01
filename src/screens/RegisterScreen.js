@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-import {Box,Text,Heading,VStack,FormControl,Input,Button,HStack,Center,Pressable} from "gluestack-ui";
+import {Box,Text,Heading,VStack,FormControl,Input,Button,HStack,Center,Pressable,FormControlLabel,FormControlLabelText} from "@gluestack-ui/themed";
 import {StyleSheet} from "react-native";
 import {useDispatch} from "react-redux";
 import {gotoLogin,registerAsync} from "../redux/accountSlice"
@@ -73,35 +73,41 @@ const RegisterScreen=()=>{
         <Center w='100%' flex={1}>
             <Box safeArea p='2' py='8' w='90%' maxW="290">
                 <VStack alignItems={'center'} mb='4'>
-                    <Heading size='lg' fontweight='600' color='colorGraay.800' _dark={{
-                        color:'warmGray.50'
+                    <Text size='lg' fontweight='600' color="gray" _dark={{
+                        color:"black"
                     }}>
                         註冊
-                    </Heading>
+                    </Text>
                 </VStack>
 
                 <VStack space={3} mt='5'>
                     <FormControl>
-                        <FormControl.Label>姓名</FormControl.Label>
+                        <FormControlLabel>
+                            <FormControlLabelText>姓名</FormControlLabelText>
+                        </FormControlLabel>
                         <Input value={name}
                             onChangeText={text=>setName(text)}
                         />
                     </FormControl>
 
                     <FormControl>
-                        <FormControl.Label>Email</FormControl.Label>
+                    <FormControlLabel>
+                            <FormControlLabelText>Email</FormControlLabelText>
+                        </FormControlLabel>
                         <Input value={email}
                            onChangeText={text =>setEmail(text)}
                         />
                     </FormControl>
                     <FormControl>
-                        <FormControl.Label>密碼</FormControl.Label>
+                    <FormControlLabel>
+                            <FormControlLabelText>密碼</FormControlLabelText>
+                        </FormControlLabel>
                         <Input type='password' value={password}
                            onChangeText={text=>setPassword(text)}/>
 
                     </FormControl>
 
-                    <AnimatedButton mt='12' h='10' w='100%' mx='auto' colorScheme='indigo'
+                    <Animated.View mt='12' h='10' w='100%' mx='auto' colorScheme='indigo'
                        borderRadius={loginRequest? 48:null}
                        height={loginRequest ? "10":null}
                        style={animatedButtonStyles}
@@ -110,21 +116,21 @@ const RegisterScreen=()=>{
                         {
                             loginRequest
                             ? <Animated.View style={[styles.spinner,animatedSpinnerStyles]}/>
-                            : '註冊'
+                            : <Text>註冊</Text>
                         }
 
-                    </AnimatedButton>
+                    </Animated.View>
 
                     <HStack mt='2' justifyContent='center' alignItems={'center'}>
-                        <Text fontSize='sm' color='coolGray.600' _dark={{
-                            color:'warmGray.200'
+                        <Text fontSize={18} color="gray" _dark={{
+                            color:"black"
                         }}>
                         已有帳號{""}
                         </Text>
                         <Pressable onPress={goToLogin}>
                             <Text
-                              fontweight="medium"
-                              fontSize='xs'
+                              fontWeight="medium"
+                              fontSize={18}
                             >
                                 註冊
                             </Text>

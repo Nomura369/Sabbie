@@ -10,8 +10,8 @@ import {
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { Divider, Image, Text, Center, VStack } from '@gluestack-ui/themed';
-import { TouchableOpacity, Pressable } from 'react-native';
+import { Divider, Image, Text, VStack, KeyboardAvoidingView, StatusBar } from '@gluestack-ui/themed';
+import { TouchableOpacity, Pressable, Platform } from 'react-native';
 
 import TheTheme from '../theme';
 import StatisticsScreen from "../screens/StatisticsScreen"
@@ -21,18 +21,15 @@ import HomeScreen from "../screens/HomeScreen"
 import QuestionScreen from '../screens/QuestionScreen';
 import CompletionScreen from "../screens/CompletionScreen"
 import LoginScreen from '../screens/LoginScreen';
-import SettingScreen from "../screens/SettingScreen"
 import HelpScreen from '../screens/HelpScreen';
-//import LogoutScreen from "../screens/LogoutScreen"
-
+import LogoutScreen from "../screens/LogoutScreen"
+import GeneralAccountScreen from '../screens/GeneralAccountScreen';
 import RegisterScreen from "../screens/RegisterScreen";
 import AuthScreen from "../screens/AuthScreen";
-import {selectLogin} from "../redux/accountSlice";
+import DiaryScreen from "../screens/DiaryScreen";
 
-import { GlueProvider, extendTheme, KeyboardAvoidingView } from 'gluestack-ui';
-//import {NativeBaseProvider,extendTheme,KeyBoardAvoidingView} from 'native-base';
-
-
+import { selectLogin } from "../redux/accountSlice";
+import { useSelector } from "react-redux";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -46,93 +43,90 @@ const Drawer = createDrawerNavigator();
 //   );
 // }
 
-const Navigation=()=>{
-    
-    const login = useSelector(selectLogin);
+const Navigation = () => {
+  const login = useSelector(selectLogin);
 
-
-    return(
-      <GlueProvider>
-        <KeyboardAvoidingView 
-            keyboardVerticalOffset={Platform.select({ ios: 0, android: -500 })}
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-            flex={1}
-        >
-        {
-          !login.hasLogin
-          ?<AuthScreen/>
-          :(
-            <NavigationContainer>
-              <StatusBar/>
-              <TheDrawer/>
+  return (
+    <KeyboardAvoidingView
+      keyboardVerticalOffset={Platform.select({ ios: 0, android: -500 })}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      flex={1}
+    >
+      {/* <NavigationContainer theme={TheTheme}>
+        <StatusBar />
+        <TheDrawer />
+      </NavigationContainer> */}
+      {
+        (!login.hasLogin) ?
+          <AuthScreen /> :
+          (
+            <NavigationContainer theme={TheTheme}>
+              <StatusBar />
+              <TheDrawer />
             </NavigationContainer>
           )
-        }
-
-        </KeyboardAvoidingView>
-      </GlueProvider>
-    );
+      }
+    </KeyboardAvoidingView>
+  );
 }
 
 /*Drawer專區-起點*/
 const TheDrawer = () => { // Drawer導覽編排
-    const { colors } = useTheme();
-  
-    return (
-      <Drawer.Navigator
-        initialRouteName="HomeStack"
-        screenOptions={{
-          headerShown: false,
-          drawerActiveTintColor: colors.primary2,
-          drawerInactiveTintColor: colors.character1,
-          drawerStyle: { width: 300 },
-          drawerLabelStyle: { fontSize: 14 }, // icon旁的文字設定
+  const { colors } = useTheme();
+
+  return (
+    <Drawer.Navigator
+      initialRouteName="HomeStack"
+      screenOptions={{
+        headerShown: false,
+        drawerActiveTintColor: colors.primary2,
+        drawerInactiveTintColor: colors.character1,
+        drawerStyle: { width: 300 },
+        drawerLabelStyle: { fontSize: 14 }, // icon旁的文字設定
+      }}
+      drawerContent={props => <CustomDrawerContent {...props} />}
+    >
+      <Drawer.Screen
+        name="HomeStack"
+        component={HomeStack}
+        options={{
+          drawerLabel: "首頁",
+          drawerIcon: ({ color }) => (
+            <MaterialCommunityIcons name="home" color={color} size={24} />
+          ),
         }}
-        drawerContent={props => <CustomDrawerContent {...props} />}
-      >
-        <Drawer.Screen
-          name="HomeStack"
-          component={HomeStack}
-          options={{
-            drawerLabel: "首頁",
-            drawerIcon: ({ color }) => (
-              <MaterialCommunityIcons name="home" color={color} size={24} />
-            ),
-          }}
-        />
-        <Drawer.Screen
-          // 登入後消失
-          name="Login"
-          component={LoginScreen}
-          options={{
-            drawerLabel: "登入", 
-            drawerIcon: ({ color }) => (
-              <MaterialCommunityIcons name="account-circle" color={color} size={24} />
-            ),
-          }}
-        />
-        <Drawer.Screen
-          name="Setting"
-          component={SettingScreen}
-          options={{
-            drawerLabel: "設定",
-            drawerIcon: ({ color }) => (
-              <MaterialCommunityIcons name="cog" color={color} size={24} />
-            ),
-          }}
-        />
-        <Drawer.Screen
-          name="Help"
-          component={HelpScreen}
-          options={{
-            drawerLabel: "幫助",
-            drawerIcon: ({ color }) => (
-              <MaterialCommunityIcons name="help-circle" color={color} size={24} />
-            ),
-          }}
-        />
-        {/*<Drawer.Screen
-          // 登入後才出現
+      />
+      {/* <Drawer.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{
+          drawerLabel: "登入",
+          drawerIcon: ({ color }) => (
+            <MaterialCommunityIcons name="account-circle" color={color} size={24} />
+          ),
+        }}
+      /> */}
+      <Drawer.Screen
+        name="Setting"
+        component={GeneralAccountScreen}
+        options={{
+          drawerLabel: "設定",
+          drawerIcon: ({ color }) => (
+            <MaterialCommunityIcons name="cog" color={color} size={24} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Help"
+        component={HelpScreen}
+        options={{
+          drawerLabel: "幫助",
+          drawerIcon: ({ color }) => (
+            <MaterialCommunityIcons name="help-circle" color={color} size={24} />
+          ),
+        }}
+      />
+      <Drawer.Screen
           name="Logout"
           component={LogoutScreen}
           options={{
@@ -141,166 +135,166 @@ const TheDrawer = () => { // Drawer導覽編排
               <MaterialCommunityIcons name="logout" color={color} size={24} />
             ),
           }}
-        />*/}
-      </Drawer.Navigator>
-    );
-  }
+        />
+    </Drawer.Navigator>
+  );
+}
 
 const CustomDrawerContent = (props) => { // Drawer頁面排版
-    const { colors } = useTheme();
+  const { colors } = useTheme();
 
-    return (
-      <DrawerContentScrollView {...props}
-        contentContainerStyle={{ paddingTop: 0 }}
-      >
-            <VStack mt={40} mb={16} ml={16}>
-              <Image
-              height={48}
-              width={48}
-              source={{ uri: "https://i.imgur.com/XW0YcYX.png" }} //登入後預計會換成彩色圖片
-              alt='userImage'
-              />
-              {/*登入後預計會換成用戶名*/}
-              <Text fontSize={20} color={colors.character2} my={16}>訪客</Text> 
-            </VStack>
-            <Divider mb={8} />
+  return (
+    <DrawerContentScrollView {...props}
+      contentContainerStyle={{ paddingTop: 0 }}
+    >
+      <VStack mt={40} mb={16} ml={16}>
+        <Image
+          height={48}
+          width={48}
+          source={{ uri: "https://i.imgur.com/XW0YcYX.png" }} //登入後預計會換成彩色圖片
+          alt='userImage'
+        />
+        {/*登入後再從 firebase 撈用戶名來用*/}
+        <Text fontSize={20} color={colors.character2} my={16}>訪客</Text>
+      </VStack>
+      <Divider mb={8} />
 
-            {/*Drawer.Screen內容*/}
-            <DrawerItemList {...props} />
+      {/*Drawer.Screen內容*/}
+      <DrawerItemList {...props} />
 
-            {/*自訂Drawer項目：DrawerItem，目前沒放*/}
-        </DrawerContentScrollView>
-    );
-  }
+      {/*自訂Drawer項目：DrawerItem，目前沒放*/}
+    </DrawerContentScrollView>
+  );
+}
 /*Drawer專區-終點*/
 
 
 /*Stack專區-起點*/
 const HomeStack = ({ navigation }) => {
-    const { colors } = useTheme();
+  const { colors } = useTheme();
 
-    return (
-      <Stack.Navigator
-        initialRouteName="HomeTab"
-        screenOptions={{
-            headerTintColor: colors.character1, // 改變返回鍵與 Header 文字的顏色
-        }}
-      >
-        <Stack.Screen
-          name="HomeTab"
-          component={TheTab}
-          options={() => ({
-            headerShown: false,
-          })}
-        />
-        <Stack.Screen
-          name="Question"
-          component={QuestionScreen}
-          options={() => ({
-            headerTransparent: true, // 使 Header 背景透明化
-            headerTitle: "Hi！你今天感覺如何？",
-            headerTitleStyle: {
-                fontSize: 22,
-                fontFamily: "cjkFonts",
-              },
-            headerLeft: () => (
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <MaterialCommunityIcons 
-                  name="close" 
-                  size={32} 
-                  style={{color: colors.character1}}
-                />
-              </TouchableOpacity>
-            ),
-            headerRight: () => (
-              <Pressable onPress={() => navigation.navigate("Completion")}>
-                <MaterialCommunityIcons
-                  name="check"
-                  size={32}
-                  style={{color: colors.primary2}}
-                />
-              </Pressable>
-              ),
-          })}
-        />
-        <Stack.Screen
-          name="Completion"
-          component={CompletionScreen}
-          options={() => ({
-            headerShown: false,
-          })}
-        />
-        <Stack.Screen
-          name="Diary"
-          component={DiaryScreen}
-          options={() => ({
-            headerTransparent: true, // 使 Header 背景透明化
-            headerTitle: "", //文字透明化 => 直接不寫標題
-            headerLeft: () => (
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <MaterialCommunityIcons 
-                  name="close" 
-                  size={32} 
-                  style={{color: colors.character1}}
-                />
-              </TouchableOpacity>
-            ),
-          })}
-        />
-      </Stack.Navigator>
-    );
-  }
+  return (
+    <Stack.Navigator
+      initialRouteName="HomeTab"
+      screenOptions={{
+        headerTintColor: colors.character1, // 改變返回鍵與 Header 文字的顏色
+      }}
+    >
+      <Stack.Screen
+        name="HomeTab"
+        component={TheTab}
+        options={() => ({
+          headerShown: false,
+        })}
+      />
+      <Stack.Screen
+        name="Question"
+        component={QuestionScreen}
+        options={() => ({
+          headerTransparent: true, // 使 Header 背景透明化
+          headerTitle: "Hi！你今天感覺如何？",
+          headerTitleStyle: {
+            fontSize: 22,
+            fontFamily: "cjkFonts",
+          },
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <MaterialCommunityIcons
+                name="close"
+                size={32}
+                style={{ color: colors.character1 }}
+              />
+            </TouchableOpacity>
+          ),
+          headerRight: () => (
+            <Pressable onPress={() => navigation.navigate("Completion")}> {/*還要再傳星星資料到下一頁*/}
+              <MaterialCommunityIcons
+                name="check"
+                size={32}
+                style={{ color: colors.primary2 }}
+              />
+            </Pressable>
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="Completion"
+        component={CompletionScreen}
+        options={() => ({
+          headerShown: false,
+        })}
+      />
+      <Stack.Screen
+        name="Diary"
+        component={DiaryScreen}
+        options={() => ({
+          headerTransparent: true, // 使 Header 背景透明化
+          headerTitle: "", //文字透明化 => 直接不寫標題
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <MaterialCommunityIcons
+                name="close"
+                size={32}
+                style={{ color: colors.character1 }}
+              />
+            </TouchableOpacity>
+          ),
+        })}
+      />
+    </Stack.Navigator>
+  );
+}
 /*Stack專區-終點*/
 
 /*Tab專區-起點*/
 const TheTab = () => {
-    const { colors } = useTheme();
-  
-    return (
-      <Tab.Navigator
-        initialRouteName="Home"
-        screenOptions={{
-          tabBarInactiveTintColor: colors.character1,
-          tabBarActiveTintColor: colors.character2,
-          headerShown: false,
-          tabBarStyle: { height: 60, paddingTop: 13, paddingBottom: 13 },
+  const { colors } = useTheme();
+
+  return (
+    <Tab.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        tabBarInactiveTintColor: colors.character1,
+        tabBarActiveTintColor: colors.character2,
+        headerShown: false,
+        tabBarStyle: { height: 60, paddingTop: 13, paddingBottom: 13 },
+      }}
+    >
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="book" color={color} size={34} />
+          ),
+          headerLeft: () => (
+            <MaterialCommunityIcons
+              name={"menu"}
+              size={32}
+              onPress={() => navigation.openDrawer()}
+            />
+          ),
         }}
-      >
-        <Tab.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="book" color={color} size={34} />
-            ),
-            headerLeft: () => (
-                <MaterialCommunityIcons
-                    name={"menu"}
-                    size={32}
-                    onPress={() => navigation.openDrawer()}
-                />
-              ),
-          }}
-        />
-        <Tab.Screen
-          name="ActionButton"
-          component={NullScreen}
-          options={{
-            tabBarButton: () => <ActionButton />
-          }}
-        />
-        <Tab.Screen
-          name="Statistic"
-          component={StatisticsScreen}
-          options={{
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="heart-pulse" color={color} size={34} />
-            ),
-          }}
-        />
-      </Tab.Navigator>
-    );
-  }
+      />
+      <Tab.Screen
+        name="ActionButton"
+        component={NullScreen}
+        options={{
+          tabBarButton: () => <ActionButton />
+        }}
+      />
+      <Tab.Screen
+        name="Statistic"
+        component={StatisticsScreen}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="heart-pulse" color={color} size={34} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
+}
 /*Tab專區-終點*/
 
 export default Navigation;

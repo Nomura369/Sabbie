@@ -1,5 +1,5 @@
 
-import { Box, Center } from "gluestack-ui";
+import { Box, Center } from "@gluestack-ui/themed";
 import { useEffect } from "react";
 import Animated, {
    useAnimatedStyle,

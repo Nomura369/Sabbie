@@ -1,59 +1,72 @@
+import { useTheme } from '@react-navigation/native';
 import { Center, Text, VStack, Image, HStack } from "@gluestack-ui/themed";
 import { Pressable } from "react-native";
 import { toggleIsQuestion1, chooseWhichQuestion2 } from "../redux/questionSlice";
-import { selectIsQuestion1, selectWhichQuestion2 } from "../redux/questionSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+
+import emotions from "../json/emotions.json"
 
 const Question1 = () => {
-    const isQuestion1 = useSelector(selectIsQuestion1);
-    const whichQuestion2 = useSelector(selectWhichQuestion2);
     const dispatch = useDispatch();
+    const onPress = (choice) => {
+        dispatch(toggleIsQuestion1());
+        dispatch(chooseWhichQuestion2(choice));
+    };
 
+    const { colors } = useTheme();
     const imgWidth = 120, imgHeight = 120;
+
+    console.log(emotions[0].name);
 
     return (
         <VStack flex={1} alignItems="center">
             <Center mt={30}> {/*星星的部分*/}
                 <HStack justifyContent="space-around" mb={20}> {/*上排星星*/}
                     <VStack alignItems="center">
-                        <Pressable onPress>
+                        <Pressable onPress={onPress(emotions[0].name)}>
                             <Image
-                                alt="喜悅"
+                                alt={emotions[0].name}
                                 width={imgWidth}
                                 height={imgHeight}
-                                src={{ uri: "https://i.imgur.com/ParZqhd.png" }}
+                                src={{ uri: emotions[0].img }}
                             />
                         </Pressable>
-                        <Text fontFamily="cjkFonts" fontSize={20}>喜悅</Text>
+                        <Text fontFamily="cjkFonts" fontSize={20} color={colors.character1}>{emotions[0].name}</Text>
                     </VStack>
                     <VStack alignItems="center">
-                        <Image
-                            alt="憤怒"
-                            width={imgWidth}
-                            height={imgHeight}
-                            src={{ uri: "https://i.imgur.com/BRvZu50.png" }}
-                        />
-                        <Text fontFamily="cjkFonts" fontSize={20}>憤怒</Text>
+                        <Pressable onPress={onPress(emotions[1].name)}>
+                            <Image
+                                alt={emotions[1].name}
+                                width={imgWidth}
+                                height={imgHeight}
+                                src={{ uri: emotions[1].img }}
+                            />
+                        </Pressable>
+                        <Text fontFamily="cjkFonts" fontSize={20} color={colors.character1}>{emotions[1].name}</Text>
                     </VStack>
                 </HStack>
                 <HStack justifyContent="space-around"> {/*下排星星*/}
                     <VStack alignItems="center">
-                        <Image
-                            alt="哀傷"
-                            width={imgWidth}
-                            height={imgHeight}
-                            src={{ uri: "https://i.imgur.com/EdMftUK.png" }}
-                        />
-                        <Text fontFamily="cjkFonts" fontSize={20}>哀傷</Text>
+                        <Pressable onPress={onPress(emotions[2].name)}>
+                            <Image
+                                alt={emotions[2].name}
+                                width={imgWidth}
+                                height={imgHeight}
+                                src={{ uri: emotions[2].img }}
+                            />
+                        </Pressable>
+                        <Text fontFamily="cjkFonts" fontSize={20} color={colors.character1}>{emotions[2].name}</Text>
                     </VStack>
                     <VStack alignItems="center">
-                        <Image
-                            alt="恐懼"
-                            width={imgWidth}
-                            height={imgHeight}
-                            src={{ uri: "https://i.imgur.com/iZ3NN5j.png" }}
-                        />
-                        <Text fontFamily="cjkFonts" fontSize={20}>恐懼</Text>
+                        <Pressable onPress={onPress(emotions[3].name)}>
+                            <Image
+                                alt={emotions[3].name}
+                                width={imgWidth}
+                                height={imgHeight}
+                                src={{ uri: emotions[3].img }}
+                            />
+                        </Pressable>
+                        <Text fontFamily="cjkFonts" fontSize={20} color={colors.character1}>{emotions[3].name}</Text>
                     </VStack>
                 </HStack>
             </Center>
