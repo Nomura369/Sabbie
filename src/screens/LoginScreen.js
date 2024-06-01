@@ -1,4 +1,5 @@
 import { useTheme } from '@react-navigation/native';
+
 import { 
     Center, 
     Text, 
@@ -12,23 +13,83 @@ import {
     ScrollView,
     KeyboardAvoidingView,
 } from "@gluestack-ui/themed";
+
 import { Dimensions, Pressable, Platform } from 'react-native';
 import { useState } from "react";
 import { useDispatch } from 'react-redux';
+import {gotoRegister,loginAsync} from "../redux/accountSlice";
+
+const AnimatedButton=Animated.createAnimatedComponent(Button);
 
 const LoginScreen = () => {
+    const dispatch=useDispatch();
+    const [loginRequest,setLoginRequest]=useState(false);
+    const [email,setEmail]=useState();
+    const [password,setPassword] = useState();
+
     const { colors } = useTheme();
 
     const windowWidth = Dimensions.get('window').width; // 裝置的寬
     const textInputWidth = windowWidth - 50 * 2;
 
-    const [email, setEmail] = useState("");
-    const [emailIsError, setEmailIsError] = useState(true);
-    const [password, setPassword] = useState("");
-    const [passwordIsError, setPasswordIsError] = useState(true);
+    const rotation=useSharedValue(0);
+    const btnWidth=useSharedValue("100%");
+    const animatedSpinnerStyles=useAnimatedStyle(()=>{
+       return{
+         transform:[
+         {
+         rotateZ:'${rotation.value}deg',
+         },
+         ],
+       };
+    },[rotation.value]
+    );
 
-    const emailRegex = /\w{3,}@[a-zA-Z_]+\.[a-zA-Z]{2,5}/; // 正確的信箱格式範例：abc@domain.com
-    const passwordRegex = /(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}/ // 密碼至少要有八個字元，而且應包含數字及英文字母
+    const animatedButtonStyles=useAnimatedStyle(()=>{
+      return{
+        width:btnWidth.value,
+      };
+    },[btnWidth.value]
+    );
+
+    const onPressButton = () => {
+      dispatch(loginAsync({ email, password }))
+      setLoginRequest(!loginRequest);
+      if (loginRequest) {
+         rotation.value = withTiming(0, {
+            duration: 1000,
+            easing: Easing.linear,
+         });
+         btnWidth.value = withTiming('100%', {
+            duration: 400,
+            easing: Easing.linear,
+         });
+      } else {
+         rotation.value = withRepeat(
+            withTiming(360, {
+               duration: 1000,
+               easing: Easing.linear,
+            }),
+            -1
+         );
+         btnWidth.value = withTiming("15", {
+            duration: 300,
+            easing: Easing.linear,
+         });
+      }
+   }
+
+   const gotoRegister=()=>{
+    dispatch(gotoRegister())
+   }
+
+    // const [email, setEmail] = useState("");
+    // const [emailIsError, setEmailIsError] = useState(true);
+    // const [password, setPassword] = useState("");
+    // const [passwordIsError, setPasswordIsError] = useState(true);
+
+    // const emailRegex = /\w{3,}@[a-zA-Z_]+\.[a-zA-Z]{2,5}/; // 正確的信箱格式範例：abc@domain.com
+    // const passwordRegex = /(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}/ // 密碼至少要有八個字元，而且應包含數字及英文字母
 
     return (
         <KeyboardAvoidingView
@@ -58,21 +119,16 @@ const LoginScreen = () => {
                                 </FormControlLabel>
                                 <Input>
                                     <InputField 
-                                        type="text"
                                         value={email}
-                                        onChangeText={(text) => {
-                                            setEmail(text);
-                                            if (emailRegex.test(text)) setEmailIsError(false);
-                                            else setEmailIsError(true);
-                                        }}
+                                        onChangeText={email=>setEmail(email)}
                                     />
                                 </Input>
-                                <FormControlError isInvalid={emailIsError}>
+                                {/* <FormControlError isInvalid={emailIsError}>
                                     <FormControlErrorIcon as={AlertCircleIcon} />
                                     <FormControlErrorText>
                                        無效的電子信箱地址。
                                     </FormControlErrorText>
-                                </FormControlError>
+                                </FormControlError> */}
                             </FormControl>
                             <FormControl //密碼欄位
                                 isRequired
@@ -91,24 +147,31 @@ const LoginScreen = () => {
                                 </FormControlLabel>
                                 <Input>
                                     <InputField 
-                                        type="password" 
-                                        value={password}
-                                        onChangeText={(text) => {
-                                            setPassword(text);
-                                            if (passwordRegex.test(text)) setPasswordIsError(false);
-                                            else setPasswordIsError(true);
-                                        }}
+                                        type={password} value={password}
+                                        onChangeText={password=>setPassword(password)}
                                     />
                                 </Input>
-                                <FormControlError isInvalid={passwordIsError}>
+                                {/* <FormControlError isInvalid={passwordIsError}>
                                     <FormControlErrorIcon as={AlertCircleIcon} />
                                     <FormControlErrorText>
                                        密碼至少要有八個字元，而且應包含數字及英文字母。
                                     </FormControlErrorText>
-                                </FormControlError>
+                                </FormControlError> */}
                             </FormControl>
-                        </VStack>
-                        <Pressable
+                            <AnimatedButton mt="12" h="10" w="100%" mx="auto" colorScheme="indigo"
+                                borderRadius={loginRequest ? 48 : null}
+                                height={loginRequest ? "10" : null}
+                                style={animatedButtonStyles}
+                                onPress={onPressButton}
+                            >
+                                {
+                                    loginRequest
+                                    ? <Animated.View style={[styles.spinner, animatedSpinnerStyles]} />
+                                    : '登入'
+                                }
+                            </AnimatedButton>
+
+                            {/* <Pressable
                             bg={colors.primary3}
                             borderColor={colors.primary3}
                             borderRadius={30}
@@ -116,11 +179,44 @@ const LoginScreen = () => {
                             //onPress={} //firebase認證＆以redux紀錄登入登出狀態
                         >
                             <Text fontSize={24} fontFamily="cjkFonts" color={colors.character1}>登入</Text>
-                        </Pressable>
+                        </Pressable> */}
+
+                            <Pressable onPress={goToRegister}>
+                                <Text
+                                    color={colorMode == 'dark'? "indigo.300" : "indigo.500"}
+                                    fontWeight="medium"
+                                    fontSize="xs"
+                                    >註冊</Text>
+                            </Pressable>
+                        </VStack>  
                     </Center>
                 </ScrollView>
         </KeyboardAvoidingView>
     );
 }
+
+const styles = StyleSheet.create({
+    buttonStyle: {
+       color: "white",
+       backgroundColor: 'black',
+       textAlign: 'center',
+       paddingVertical: 10,
+       width: '100%',
+       borderRadius: 200,
+       fontFamily:"cjkFonts"
+    },
+    spinner: {
+       height: 20,
+       width: 20,
+       borderRadius: 30,
+       borderWidth: 4,
+       borderTopColor: '#f5f5f5',
+       borderRightColor: '#f5f5f5',
+       borderBottomColor: 'lightblue',
+       borderLeftColor: 'lightblue',
+       fontFamily:"cjkFonts"
+    },
+ })
+
 
 export default LoginScreen;

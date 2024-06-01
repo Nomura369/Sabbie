@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-import {Box,Text,Heading,VStack,FormControl,Input,Button,HStack,Center,Pressable} from "native-base";
+import {Box,Text,Heading,VStack,FormControl,Input,Button,HStack,Center,Pressable} from "gluestack-ui";
 import {StyleSheet} from "react-native";
 import {useDispatch} from "react-redux";
 import {gotoLogin,registerAsync} from "../redux/accountSlice"

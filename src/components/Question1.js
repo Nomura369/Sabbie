@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Question1 = () => {
     const isQuestion1 = useSelector(selectIsQuestion1);
-    const Question2 = useSelector(selectWhichQuestion2);
+    const whichQuestion2 = useSelector(selectWhichQuestion2);
     const dispatch = useDispatch();
 
     const imgWidth = 120, imgHeight = 120;

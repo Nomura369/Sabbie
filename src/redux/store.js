@@ -3,6 +3,7 @@ import accountReducer from "./accountSlice";
 import questionSlice from './questionSlice';
 import { persistStore, persistReducer } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import thunk from "redux-thunk";
 
 const persistConfig={
     key:'root',
@@ -16,10 +17,7 @@ export const store = configureStore({
     },
     
     devTools:process.env.NODE_ENV !=='production',
-    middleware: (getDefaultMiddleware)=>
-     getDefaultMiddleware({
-        serializableCheck:false,
-     }),
+    middleware: [thunk]
 });
 
 persistStore(store);

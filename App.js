@@ -13,6 +13,7 @@ import { Provider } from 'react-redux';
 import Navigation from "./src/navigation/index";
 import store from './src/redux/store';
 
+
 SplashScreen.preventAutoHideAsync();
 
 const App = () => {
@@ -36,8 +37,10 @@ const App = () => {
       <SafeAreaView style={{flex: 1}} onLayout={onLayoutRootView}>
         <Provider store={store}>
           <GluestackUIProvider config={config}>
-            <StatusBar />
-            <Navigation />
+            
+             < StatusBar />
+               <Navigation />
+            
           </GluestackUIProvider>  
         </Provider>       
       </SafeAreaView>  

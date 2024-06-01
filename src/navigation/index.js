@@ -25,16 +25,53 @@ import SettingScreen from "../screens/SettingScreen"
 import HelpScreen from '../screens/HelpScreen';
 //import LogoutScreen from "../screens/LogoutScreen"
 
+import RegisterScreen from "../screens/RegisterScreen";
+import AuthScreen from "../screens/AuthScreen";
+import {selectLogin} from "../redux/accountSlice";
+
+import { GlueProvider, extendTheme, KeyboardAvoidingView } from 'gluestack-ui';
+//import {NativeBaseProvider,extendTheme,KeyBoardAvoidingView} from 'native-base';
+
+
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
-const Navigation = () => {
-  return (
-    <NavigationContainer theme={TheTheme}>
-      <TheDrawer />
-    </NavigationContainer>
-  );
+// const Navigation = () => {
+//   return (
+//     <NavigationContainer theme={TheTheme}>
+//       <TheDrawer />
+//     </NavigationContainer>
+//   );
+// }
+
+const Navigation=()=>{
+    
+    const login = useSelector(selectLogin);
+
+
+    return(
+      <GlueProvider>
+        <KeyboardAvoidingView 
+            keyboardVerticalOffset={Platform.select({ ios: 0, android: -500 })}
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            flex={1}
+        >
+        {
+          !login.hasLogin
+          ?<AuthScreen/>
+          :(
+            <NavigationContainer>
+              <StatusBar/>
+              <TheDrawer/>
+            </NavigationContainer>
+          )
+        }
+
+        </KeyboardAvoidingView>
+      </GlueProvider>
+    );
 }
 
 /*Drawer專區-起點*/
